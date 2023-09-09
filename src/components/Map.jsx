@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+
 import { useNavigate } from "react-router-dom";
 import styles from "./Map.module.css";
 import { useGeolocation } from "../hooks/useGeolocation";
@@ -14,6 +14,7 @@ import {
 } from "react-leaflet";
 import { useCities } from "../contexts/CityContext";
 import Button from "./Button";
+import { useUrlPosition } from "../hooks/useUrlPosition";
 
 export default function Map() {
   const { cities } = useCities();
@@ -23,9 +24,7 @@ export default function Map() {
     getPosition,
   } = useGeolocation();
 
-  const [searchParams] = useSearchParams();
-  const mapLat = searchParams.get("lat");
-  const mapLng = searchParams.get("lng");
+  const [mapLat, mapLng] = useUrlPosition();
 
   const [mapPosition, setMapPosition] = useState([40, 0]);
   useEffect(
